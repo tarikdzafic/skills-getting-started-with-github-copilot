@@ -62,21 +62,21 @@ activities = {
     "Drama Club": {
         "description": "Act, direct, and produce school plays and performances",
         "schedule": "Fridays, 3:30 PM - 5:30 PM",
-        "max_participants": 25,
+        "max_participants": 20,
         "participants": ["ella@mergington.edu", "jack@mergington.edu"]
     },
     # Intellectual activities
     "Math Olympiad": {
         "description": "Prepare for math competitions and solve challenging problems",
         "schedule": "Tuesdays, 4:00 PM - 5:00 PM",
-        "max_participants": 10,
+        "max_participants": 16,
         "participants": ["ethan@mergington.edu", "grace@mergington.edu"]
     },
     "Science Club": {
         "description": "Conduct experiments and explore scientific concepts",
-        "schedule": "Wednesdays, 3:30 PM - 5:00 PM",
-        "max_participants": 16,
-        "participants": ["ben@mergington.edu", "zoe@mergington.edu"]
+        "schedule": "Thursdays, 4:00 PM - 5:30 PM",
+        "max_participants": 14,
+        "participants": ["chloe@mergington.edu", "ben@mergington.edu"]
     }
 }
 
@@ -93,6 +93,7 @@ def get_activities():
 
 @app.post("/activities/{activity_name}/signup")
 def signup_for_activity(activity_name: str, email: str):
+  
     """Sign up a student for an activity"""
     # Validate activity exists
     if activity_name not in activities:
@@ -103,8 +104,8 @@ def signup_for_activity(activity_name: str, email: str):
 
     # Validate student is not already signed up
     if email in activity["participants"]:
-        raise HTTPException(status_code=400, detail="Already signed up for this activity")
-
+        raise HTTPException(status_code=400, detail="Student is already signed up")
+        
     # Add student
     activity["participants"].append(email)
     return {"message": f"Signed up {email} for {activity_name}"}
